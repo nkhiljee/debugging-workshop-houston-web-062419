@@ -1,27 +1,60 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('joke-form')
   const jokeList = document.getElementById('joke-list')
-  const newJokeLi = document.createElement('li')
-  const username = document.getElementById('name-input').value
-  let joke;
+  // function fetchJoke(){
 
-  function fetchJoke(){
-    fetch('https://icanhazdadjoke.com/', {
-      headers: {
-        "Accept": "application/json"
+    form.addEventListener('submit', (event) => {
+      event.preventDefault()
+      fetch('https://icanhazdadjoke.com/', {
+        headers: {
+          "Accept": "application/json"
+        }
+      })
+      .then(res => res.json())
+      .then(jokeData => {
+      var username = event.target[0].value      
+      if(username) {
+        const newJokeLi = document.createElement('li')
+        newJokeLi.innerHTML = `<span class="username">${username} says:</span> ${jokeData.joke}`
+        jokeList.append(newJokeLi)
+
       }
+      // fetchJoke()
+    
+      })
+
     })
-    .then(res => res.json())
-    .then(jokeData => joke = jokeData.joke)
-  }
 
-  form.addEventListener('submit', (event) => {
+  // }
 
-    if(username === "") return;
-    fetchJoke()
-    newJokeLi.innerHTML = `
-    <span class="username">${username} says:</span> ${joke}
-    `
-    jokeList.appendChild(newJokeLi)
-  })
 })
+
+
+
+// document.addEventListener('DOMContentLoaded', () => {
+//   const form = document.getElementById('joke-form')
+//   const jokeList = document.getElementById('joke-list')
+//   const newJokeLi = document.createElement('li')
+
+//   function fetchJoke(){
+//     fetch('https://icanhazdadjoke.com/', {
+//       headers: {
+//         "Accept": "application/json"
+//       }
+//     })
+//     .then(res => res.json())
+//     .then(jokeData => {
+  
+
+//   form.addEventListener('submit', (event) => {
+//     event.preventDefault()
+//     var username = event.target[0].value 
+//     if(username == "") //return;
+//     // fetchJoke()
+//     newJokeLi.innerHTML = `
+//     <span class="username">${username} says:</span> ${jokeData.joke}
+//     `
+//     jokeList.append(newJokeLi)
+//   })
+// })
+// }})
